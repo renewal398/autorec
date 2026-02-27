@@ -1,0 +1,19 @@
+R_DEF: Internal format may change without notice
+local
+drawable circle_indicator
+id btnSave
+id btnSettings
+id btnToggleService
+id etStartWord
+id etStopWord
+id ivStatus
+id recordingIndicator
+id tvStartWord
+id tvStatus
+id tvStopWord
+layout activity_main
+layout activity_settings
+string app_name
+style Theme.autorec
+style ViveActionBar
+style ViveActionBarTitle
