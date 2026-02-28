@@ -17,4 +17,9 @@ class PreferencesManager(context: Context) {
     var isServiceRunning: Boolean
         get() = prefs.getBoolean("service_running", false)
         set(value) = prefs.edit().putBoolean("service_running", value).apply()
+
+    /** True when the service is actively recording audio right now. */
+    var isCurrentlyRecording: Boolean
+        get() = prefs.getBoolean("currently_recording", false)
+        set(value) = prefs.edit().putBoolean("currently_recording", value).apply()
 }
