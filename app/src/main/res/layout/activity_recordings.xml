@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#1A1A2E">
+
+    <!-- Header bar -->
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:background="#16213E"
+        android:padding="16dp" android:gravity="center_vertical">
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:text="My Recordings" android:textSize="18sp" android:textStyle="bold" android:textColor="#FFFFFF"/>
+        <TextView android:id="@+id/tvCount" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="0 recordings" android:textSize="13sp" android:textColor="#888888"/>
+    </LinearLayout>
+
+    <!-- Live recording banner (shown while recording is active) -->
+    <LinearLayout android:id="@+id/bannerRecording"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:background="#660000" android:padding="10dp" android:gravity="center"
+        android:visibility="gone">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="  🔴 Recording in progress..." android:textSize="13sp" android:textColor="#FF6666"/>
+    </LinearLayout>
+
+    <!-- Empty state -->
+    <TextView android:id="@+id/tvEmpty"
+        android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:text="No recordings yet.\n\nSay your start word to begin recording!"
+        android:textSize="16sp" android:textColor="#555555"
+        android:gravity="center" android:visibility="gone"/>
+
+    <!-- Recordings list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecordings"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"/>
+
+    <!-- ── Now Playing Bar (hidden until a track is playing) ──────────────── -->
+    <LinearLayout
+        android:id="@+id/playerBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#0D1B2A"
+        android:padding="12dp"
+        android:visibility="gone">
+
+        <!-- Track name + close button -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+            <TextView android:id="@+id/tvNowPlaying"
+                android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                android:textSize="13sp" android:textColor="#E94560" android:textStyle="bold"
+                android:maxLines="1" android:ellipsize="end"/>
+            <ImageButton android:id="@+id/btnPlayerClose"
+                android:layout_width="32dp" android:layout_height="32dp"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:background="@android:color/transparent"
+                android:tint="#888888"/>
+        </LinearLayout>
+
+        <!-- SeekBar -->
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="#E94560"
+            android:thumbTint="#E94560"
+            android:layout_marginBottom="4dp"/>
+
+        <!-- Time + play/pause -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical">
+            <TextView android:id="@+id/tvCurrentTime"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="0:00" android:textSize="11sp" android:textColor="#888888"
+                android:layout_marginEnd="8dp"/>
+            <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+            <ImageButton android:id="@+id/btnPlayerPlayPause"
+                android:layout_width="44dp" android:layout_height="44dp"
+                android:src="@android:drawable/ic_media_pause"
+                android:background="#1A3A5F"
+                android:padding="10dp"/>
+            <View android:layout_width="0dp" android:layout_height="1dp" android:layout_weight="1"/>
+            <TextView android:id="@+id/tvTotalTime"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="0:00" android:textSize="11sp" android:textColor="#888888"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
