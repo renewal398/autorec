@@ -53,7 +53,7 @@ class KeywordListenerService : Service(), RecognitionListener {
         wakeLock.acquire()
 
         createNotificationChannel()
-        startForeground(NOTIF_ID, buildNotification("Listening for \"${prefs.startWord}\"..."))
+        startForeground(NOTIF_ID, buildNotification("Listening for triggers..."))
         prefs.isServiceRunning = true
         prefs.isCurrentlyRecording = false   // always reset on clean start
 
@@ -176,28 +176,35 @@ class KeywordListenerService : Service(), RecognitionListener {
      *                     START from partials can cause false triggers mid-sentence.
      */
     private fun checkKeywords(matches: List<String>, fromPartial: Boolean) {
-        val startKw = prefs.startWord.lowercase().trim()
-        val stopKw  = prefs.stopWord.lowercase().trim()
+        val startKws = prefs.startWordsList
+        val stopKws  = prefs.stopWordsList
 
         for (match in matches) {
             val text  = match.lowercase().trim()
             val words = text.split("\\s+".toRegex())
 
             // --- STOP takes absolute priority while recording ---
-            if (recorder.isRecording && (anyWordMatches(words, stopKw) || phraseContains(text, stopKw))) {
-                Log.d(TAG, "STOP keyword matched in: '$match'")
-                keywordCooldownUntil = System.currentTimeMillis() + 1500L
-                handleStop()
-                return
+            if (recorder.isRecording) {
+                for (stopKw in stopKws) {
+                    if (anyWordMatches(words, stopKw) || phraseContains(text, stopKw)) {
+                        Log.d(TAG, "STOP keyword '$stopKw' matched in: '$match'")
+                        keywordCooldownUntil = System.currentTimeMillis() + 1500L
+                        handleStop()
+                        return
+                    }
+                }
             }
 
             // --- START only from final results (or strong partial match) ---
-            if (!recorder.isRecording && !fromPartial &&
-                (anyWordMatches(words, startKw) || phraseContains(text, startKw))) {
-                Log.d(TAG, "START keyword matched in: '$match'")
-                keywordCooldownUntil = System.currentTimeMillis() + 1500L
-                handleStart()
-                return
+            if (!recorder.isRecording && !fromPartial) {
+                for (startKw in startKws) {
+                    if (anyWordMatches(words, startKw) || phraseContains(text, startKw)) {
+                        Log.d(TAG, "START keyword '$startKw' matched in: '$match'")
+                        keywordCooldownUntil = System.currentTimeMillis() + 1500L
+                        handleStart()
+                        return
+                    }
+                }
             }
         }
     }
@@ -257,7 +264,7 @@ class KeywordListenerService : Service(), RecognitionListener {
         val path = recorder.startRecording()
         if (path != null) {
             prefs.isCurrentlyRecording = true
-            val msg = "🔴 Recording... say \"${prefs.stopWord}\" to stop"
+            val msg = "🔴 Recording... say a stop word to stop"
             broadcastStatus(msg, true)
             updateNotification(msg)
         } else {
@@ -272,11 +279,11 @@ class KeywordListenerService : Service(), RecognitionListener {
         if (savedPath != null) {
             val name = savedPath.substringAfterLast("/")
             broadcastStatus("✅ Saved: $name  |  Listening...", false)
-            updateNotification("👂 Listening for \"${prefs.startWord}\"...")
+            updateNotification("👂 Listening for triggers...")
             sendBroadcast(Intent(ACTION_RECORDING_DONE).putExtra(EXTRA_FILE_PATH, savedPath))
         } else {
             broadcastStatus("❌ Failed to save recording", false)
-            updateNotification("👂 Listening for \"${prefs.startWord}\"...")
+            updateNotification("👂 Listening for triggers...")
         }
         // No stopSelf() — service continues listening for the NEXT start word
     }

@@ -4,11 +4,11 @@
     android:orientation="vertical" android:background="#1A1A2E" android:padding="24dp">
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="Set your trigger words" android:textSize="14sp" android:textColor="#888888"
+        android:text="Set your trigger words (separated by commas)" android:textSize="14sp" android:textColor="#888888"
         android:layout_marginBottom="28dp" android:layout_marginTop="12dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="START RECORDING WORD" android:textSize="10sp" android:textColor="#E94560"
+        android:text="START RECORDING WORDS" android:textSize="10sp" android:textColor="#E94560"
         android:letterSpacing="0.15" android:layout_marginBottom="8dp"/>
     <EditText android:id="@+id/etStartWord" android:layout_width="match_parent" android:layout_height="54dp"
         android:background="#16213E" android:textColor="#FFFFFF" android:textColorHint="#555555"
@@ -16,7 +16,7 @@
         android:inputType="text" android:maxLines="1" android:layout_marginBottom="20dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="STOP RECORDING WORD" android:textSize="10sp" android:textColor="#E94560"
+        android:text="STOP RECORDING WORDS" android:textSize="10sp" android:textColor="#E94560"
         android:letterSpacing="0.15" android:layout_marginBottom="8dp"/>
     <EditText android:id="@+id/etStopWord" android:layout_width="match_parent" android:layout_height="54dp"
         android:background="#16213E" android:textColor="#FFFFFF" android:textColorHint="#555555"
@@ -24,7 +24,7 @@
         android:inputType="text" android:maxLines="1" android:layout_marginBottom="6dp"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="Use single clear words. Avoid words that sound alike (e.g. start/heart)."
+        android:text="Use clear words separated by commas. Avoid words that sound alike."
         android:textSize="12sp" android:textColor="#777777" android:layout_marginBottom="28dp"/>
 
     <Button android:id="@+id/btnSave" android:layout_width="match_parent" android:layout_height="54dp"

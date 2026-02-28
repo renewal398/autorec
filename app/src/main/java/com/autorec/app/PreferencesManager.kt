@@ -14,6 +14,12 @@ class PreferencesManager(context: Context) {
         get() = prefs.getString("stop_word", "stop") ?: "stop"
         set(value) = prefs.edit().putString("stop_word", value.trim().lowercase()).apply()
 
+    val startWordsList: List<String>
+        get() = startWord.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+
+    val stopWordsList: List<String>
+        get() = stopWord.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+
     var isServiceRunning: Boolean
         get() = prefs.getBoolean("service_running", false)
         set(value) = prefs.edit().putBoolean("service_running", value).apply()

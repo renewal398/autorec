@@ -40,9 +40,6 @@ class SettingsActivity : AppCompatActivity() {
                 newStart.equals(newStop, ignoreCase = true) -> {
                     Toast.makeText(this, "⚠️ Start and stop words must be different!", Toast.LENGTH_LONG).show()
                 }
-                newStart.contains(" ") || newStop.contains(" ") -> {
-                    Toast.makeText(this, "⚠️ Use single words only (no spaces)", Toast.LENGTH_LONG).show()
-                }
                 else -> {
                     prefs.startWord = newStart
                     prefs.stopWord = newStop
