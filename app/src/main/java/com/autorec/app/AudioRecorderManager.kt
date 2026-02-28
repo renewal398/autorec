@@ -18,6 +18,7 @@ class AudioRecorderManager(private val context: Context) {
 
     fun startRecording(): String? {
         return try {
+            // Create recordings folder in app's external files dir
             val recordingsDir = File(context.getExternalFilesDir(null), "ViveRecordings")
             if (!recordingsDir.exists()) recordingsDir.mkdirs()
 
