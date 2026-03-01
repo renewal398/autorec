@@ -53,6 +53,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        binding.btnTapTrigger.setOnClickListener {
+            startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            Toast.makeText(this, "Find 'Autorec' and turn it on", Toast.LENGTH_LONG).show()
+        }
+
         binding.btnRecordings.setOnClickListener {
             startActivity(Intent(this, RecordingsActivity::class.java))
         }

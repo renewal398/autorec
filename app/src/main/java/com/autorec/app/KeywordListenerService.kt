@@ -22,6 +22,8 @@ class KeywordListenerService : Service(), RecognitionListener {
     companion object {
         const val ACTION_STATUS_UPDATE  = "com.autorec.app.STATUS_UPDATE"
         const val ACTION_RECORDING_DONE = "com.autorec.app.RECORDING_DONE"
+        const val ACTION_START_RECORDING = "com.autorec.app.START_RECORDING"
+        const val ACTION_STOP_RECORDING  = "com.autorec.app.STOP_RECORDING"
         const val EXTRA_MESSAGE         = "message"
         const val EXTRA_IS_RECORDING    = "is_recording"
         const val EXTRA_FILE_PATH       = "file_path"
@@ -62,7 +64,21 @@ class KeywordListenerService : Service(), RecognitionListener {
         Log.d(TAG, "Service started")
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        when (intent?.action) {
+            ACTION_START_RECORDING -> {
+                if (!recorder.isRecording) {
+                    handleStart()
+                }
+            }
+            ACTION_STOP_RECORDING -> {
+                if (recorder.isRecording) {
+                    handleStop()
+                }
+            }
+        }
+        return START_STICKY
+    }
 
     override fun onDestroy() {
         super.onDestroy()

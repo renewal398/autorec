@@ -2,6 +2,8 @@ R_DEF: Internal format may change without notice
 local
 drawable circle_indicator
 drawable circle_recording
+drawable icon_background
+drawable icon_foreground
 id bannerRecording
 id btnDelete
 id btnPlay
@@ -10,6 +12,7 @@ id btnPlayerPlayPause
 id btnRecordings
 id btnSave
 id btnSettings
+id btnTapTrigger
 id btnToggleService
 id etStartWord
 id etStopWord
@@ -37,6 +40,9 @@ layout item_recording
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
+string tap_trigger_description
+string tap_trigger_label
 style Theme.Autorec
 style ViveActionBar
 style ViveActionBarTitle
+xml tap_trigger_config

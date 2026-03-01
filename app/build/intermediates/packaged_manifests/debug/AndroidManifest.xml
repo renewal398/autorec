@@ -53,6 +53,18 @@
             android:name="com.autorec.app.KeywordListenerService"
             android:exported="false"
             android:foregroundServiceType="microphone" />
+        <service
+            android:name="com.autorec.app.TapTriggerService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/tap_trigger_config" />
+        </service>
 
         <!-- Auto-start after phone reboot -->
         <receiver

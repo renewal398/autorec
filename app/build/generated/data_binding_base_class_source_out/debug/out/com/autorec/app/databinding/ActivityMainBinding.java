@@ -27,6 +27,9 @@ public final class ActivityMainBinding implements ViewBinding {
   public final Button btnSettings;
 
   @NonNull
+  public final Button btnTapTrigger;
+
+  @NonNull
   public final Button btnToggleService;
 
   @NonNull
@@ -45,12 +48,13 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tvStopWord;
 
   private ActivityMainBinding(@NonNull LinearLayout rootView, @NonNull Button btnRecordings,
-      @NonNull Button btnSettings, @NonNull Button btnToggleService,
+      @NonNull Button btnSettings, @NonNull Button btnTapTrigger, @NonNull Button btnToggleService,
       @NonNull View recordingIndicator, @NonNull View serviceDot, @NonNull TextView tvStartWord,
       @NonNull TextView tvStatus, @NonNull TextView tvStopWord) {
     this.rootView = rootView;
     this.btnRecordings = btnRecordings;
     this.btnSettings = btnSettings;
+    this.btnTapTrigger = btnTapTrigger;
     this.btnToggleService = btnToggleService;
     this.recordingIndicator = recordingIndicator;
     this.serviceDot = serviceDot;
@@ -98,6 +102,12 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnTapTrigger;
+      Button btnTapTrigger = ViewBindings.findChildViewById(rootView, id);
+      if (btnTapTrigger == null) {
+        break missingId;
+      }
+
       id = R.id.btnToggleService;
       Button btnToggleService = ViewBindings.findChildViewById(rootView, id);
       if (btnToggleService == null) {
@@ -135,7 +145,8 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((LinearLayout) rootView, btnRecordings, btnSettings,
-          btnToggleService, recordingIndicator, serviceDot, tvStartWord, tvStatus, tvStopWord);
+          btnTapTrigger, btnToggleService, recordingIndicator, serviceDot, tvStartWord, tvStatus,
+          tvStopWord);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
