@@ -1,82 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#1A1A2E"
-    android:padding="24dp">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="#1A1A2E" android:padding="24dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Set your trigger words"
-        android:textSize="14sp"
-        android:textColor="#888888"
-        android:layout_marginBottom="32dp"
-        android:layout_marginTop="16dp" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Set your trigger words (separated by commas)" android:textSize="14sp" android:textColor="#888888"
+        android:layout_marginBottom="28dp" android:layout_marginTop="12dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="START RECORDING WORD"
-        android:textSize="11sp"
-        android:textColor="#E94560"
-        android:letterSpacing="0.15"
-        android:layout_marginBottom="8dp" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="START RECORDING WORDS" android:textSize="10sp" android:textColor="#E94560"
+        android:letterSpacing="0.15" android:layout_marginBottom="8dp"/>
+    <EditText android:id="@+id/etStartWord" android:layout_width="match_parent" android:layout_height="54dp"
+        android:background="#16213E" android:textColor="#FFFFFF" android:textColorHint="#555555"
+        android:hint="e.g. record, begin, go" android:padding="16dp" android:textSize="16sp"
+        android:inputType="text" android:maxLines="1" android:layout_marginBottom="20dp"/>
 
-    <EditText
-        android:id="@+id/etStartWord"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#16213E"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#555555"
-        android:hint="e.g. record, begin, go"
-        android:padding="16dp"
-        android:textSize="16sp"
-        android:inputType="text"
-        android:maxLines="1"
-        android:layout_marginBottom="24dp" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="STOP RECORDING WORDS" android:textSize="10sp" android:textColor="#E94560"
+        android:letterSpacing="0.15" android:layout_marginBottom="8dp"/>
+    <EditText android:id="@+id/etStopWord" android:layout_width="match_parent" android:layout_height="54dp"
+        android:background="#16213E" android:textColor="#FFFFFF" android:textColorHint="#555555"
+        android:hint="e.g. stop, done, finish" android:padding="16dp" android:textSize="16sp"
+        android:inputType="text" android:maxLines="1" android:layout_marginBottom="6dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="STOP RECORDING WORD"
-        android:textSize="11sp"
-        android:textColor="#E94560"
-        android:letterSpacing="0.15"
-        android:layout_marginBottom="8dp" />
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:text="Use clear words separated by commas. Avoid words that sound alike."
+        android:textSize="12sp" android:textColor="#777777" android:layout_marginBottom="28dp"/>
 
-    <EditText
-        android:id="@+id/etStopWord"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#16213E"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#555555"
-        android:hint="e.g. stop, done, finish"
-        android:padding="16dp"
-        android:textSize="16sp"
-        android:inputType="text"
-        android:maxLines="1"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="⚠️ Use single words only. Avoid similar-sounding words."
-        android:textSize="12sp"
-        android:textColor="#888888"
-        android:layout_marginBottom="32dp" />
-
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="✅ Save Words"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#E94560" />
-
+    <Button android:id="@+id/btnSave" android:layout_width="match_parent" android:layout_height="54dp"
+        android:text="Save Words" android:textSize="16sp" android:textStyle="bold"
+        android:textColor="#FFFFFF" android:backgroundTint="#E94560"/>
 </LinearLayout>

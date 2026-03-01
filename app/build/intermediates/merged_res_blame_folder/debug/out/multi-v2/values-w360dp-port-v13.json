@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.autorec.app-mergeDebugResources-29:/values-w360dp-port-v13/values-w360dp-port-v13.xml",
+            "outputFile": "com.autorec.app-mergeDebugResources-2:/values-w360dp-port-v13/values-w360dp-port-v13.xml",
             "map": [
                 {
-                    "source": "/data/data/com.termux/files/home/.gradle/caches/transforms-3/61e17ca8228843b0b95b73d5a3a2d014/transformed/material-1.10.0/res/values-w360dp-port-v13/values-w360dp-port-v13.xml",
+                    "source": "/home/jules/.gradle/caches/8.8/transforms/fdd3b802ae60a0e61ae1997ed76a98a1/transformed/material-1.10.0/res/values-w360dp-port-v13/values-w360dp-port-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

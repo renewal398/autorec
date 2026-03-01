@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -22,16 +21,19 @@ public final class ActivityMainBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
+  public final Button btnRecordings;
+
+  @NonNull
   public final Button btnSettings;
 
   @NonNull
   public final Button btnToggleService;
 
   @NonNull
-  public final ImageView ivStatus;
+  public final View recordingIndicator;
 
   @NonNull
-  public final View recordingIndicator;
+  public final View serviceDot;
 
   @NonNull
   public final TextView tvStartWord;
@@ -42,15 +44,16 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final TextView tvStopWord;
 
-  private ActivityMainBinding(@NonNull LinearLayout rootView, @NonNull Button btnSettings,
-      @NonNull Button btnToggleService, @NonNull ImageView ivStatus,
-      @NonNull View recordingIndicator, @NonNull TextView tvStartWord, @NonNull TextView tvStatus,
-      @NonNull TextView tvStopWord) {
+  private ActivityMainBinding(@NonNull LinearLayout rootView, @NonNull Button btnRecordings,
+      @NonNull Button btnSettings, @NonNull Button btnToggleService,
+      @NonNull View recordingIndicator, @NonNull View serviceDot, @NonNull TextView tvStartWord,
+      @NonNull TextView tvStatus, @NonNull TextView tvStopWord) {
     this.rootView = rootView;
+    this.btnRecordings = btnRecordings;
     this.btnSettings = btnSettings;
     this.btnToggleService = btnToggleService;
-    this.ivStatus = ivStatus;
     this.recordingIndicator = recordingIndicator;
+    this.serviceDot = serviceDot;
     this.tvStartWord = tvStartWord;
     this.tvStatus = tvStatus;
     this.tvStopWord = tvStopWord;
@@ -83,6 +86,12 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnRecordings;
+      Button btnRecordings = ViewBindings.findChildViewById(rootView, id);
+      if (btnRecordings == null) {
+        break missingId;
+      }
+
       id = R.id.btnSettings;
       Button btnSettings = ViewBindings.findChildViewById(rootView, id);
       if (btnSettings == null) {
@@ -95,15 +104,15 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.ivStatus;
-      ImageView ivStatus = ViewBindings.findChildViewById(rootView, id);
-      if (ivStatus == null) {
-        break missingId;
-      }
-
       id = R.id.recordingIndicator;
       View recordingIndicator = ViewBindings.findChildViewById(rootView, id);
       if (recordingIndicator == null) {
+        break missingId;
+      }
+
+      id = R.id.serviceDot;
+      View serviceDot = ViewBindings.findChildViewById(rootView, id);
+      if (serviceDot == null) {
         break missingId;
       }
 
@@ -125,8 +134,8 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((LinearLayout) rootView, btnSettings, btnToggleService,
-          ivStatus, recordingIndicator, tvStartWord, tvStatus, tvStopWord);
+      return new ActivityMainBinding((LinearLayout) rootView, btnRecordings, btnSettings,
+          btnToggleService, recordingIndicator, serviceDot, tvStartWord, tvStatus, tvStopWord);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

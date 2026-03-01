@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.autorec.app"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="2.0" >
 
     <uses-sdk
         android:minSdkVersion="26"
@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <permission
         android:name="com.autorec.app.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -28,7 +30,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.autorec" >
+        android:theme="@style/Theme.Autorec" >
         <activity
             android:name="com.autorec.app.MainActivity"
             android:exported="true" >
@@ -42,11 +44,30 @@
             android:name="com.autorec.app.SettingsActivity"
             android:exported="false"
             android:parentActivityName="com.autorec.app.MainActivity" />
+        <activity
+            android:name="com.autorec.app.RecordingsActivity"
+            android:exported="false"
+            android:parentActivityName="com.autorec.app.MainActivity" />
 
         <service
             android:name="com.autorec.app.KeywordListenerService"
             android:exported="false"
             android:foregroundServiceType="microphone" />
+
+        <!-- Auto-start after phone reboot -->
+        <receiver
+            android:name="com.autorec.app.BootReceiver"
+            android:directBootAware="false"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
 
         <provider
             android:name="androidx.startup.InitializationProvider"
