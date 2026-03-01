@@ -97,8 +97,8 @@ class KeywordListenerService : Service(), RecognitionListener {
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,      10)
             putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS,  true)
             // Long silence window so the recognizer doesn't cut off mid-sentence
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,          8000L)
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 8000L)
+            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,          4000L)
+            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 4000L)
             putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS,                   150L)
         }
         try {
@@ -131,7 +131,9 @@ class KeywordListenerService : Service(), RecognitionListener {
 
     override fun onPartialResults(partialResults: Bundle?) {
         // Only act on partials during cooldown if we're recording and need the stop word ASAP
-        if (System.currentTimeMillis() < keywordCooldownUntil) return
+        val isRecording = recorder.isRecording
+        if (!isRecording && System.currentTimeMillis() < keywordCooldownUntil) return
+
         val p = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         if (!p.isNullOrEmpty()) {
             Log.d(TAG, "partial: ${p[0]}")
@@ -143,12 +145,16 @@ class KeywordListenerService : Service(), RecognitionListener {
         isListeningActive = false
         val m = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         Log.d(TAG, "onResults: $m")
-        // Only process if not in cooldown (avoid double-trigger after partial already fired)
-        if (!m.isNullOrEmpty() && System.currentTimeMillis() >= keywordCooldownUntil) {
+
+        val acted = if (!m.isNullOrEmpty() && System.currentTimeMillis() >= keywordCooldownUntil) {
             checkKeywords(m, fromPartial = false)
-        }
+        } else false
+
         // Always restart listening immediately after results — this is the key loop
-        handler.post { startListening() }
+        // UNLESS we just acted (handleStart/Stop handle their own restarts after a delay)
+        if (!acted) {
+            handler.post { startListening() }
+        }
     }
 
     override fun onError(error: Int) {
@@ -175,7 +181,7 @@ class KeywordListenerService : Service(), RecognitionListener {
      * @param fromPartial  If true, only act on STOP (so we stop recording fast).
      *                     START from partials can cause false triggers mid-sentence.
      */
-    private fun checkKeywords(matches: List<String>, fromPartial: Boolean) {
+    private fun checkKeywords(matches: List<String>, fromPartial: Boolean): Boolean {
         val startKws = prefs.startWordsList
         val stopKws  = prefs.stopWordsList
 
@@ -190,7 +196,7 @@ class KeywordListenerService : Service(), RecognitionListener {
                         Log.d(TAG, "STOP keyword '$stopKw' matched in: '$match'")
                         keywordCooldownUntil = System.currentTimeMillis() + 1500L
                         handleStop()
-                        return
+                        return true
                     }
                 }
             }
@@ -202,11 +208,12 @@ class KeywordListenerService : Service(), RecognitionListener {
                         Log.d(TAG, "START keyword '$startKw' matched in: '$match'")
                         keywordCooldownUntil = System.currentTimeMillis() + 1500L
                         handleStart()
-                        return
+                        return true
                     }
                 }
             }
         }
+        return false
     }
 
     /** Checks every individual token against the keyword with fuzzy matching. */
@@ -261,6 +268,10 @@ class KeywordListenerService : Service(), RecognitionListener {
     // ─── Actions ─────────────────────────────────────────────────────────────
 
     private fun handleStart() {
+        Log.d(TAG, "handleStart: Cycling recognizer to start recorder")
+        isListeningActive = false
+        try { speechRecognizer.cancel() } catch (_: Exception) {}
+
         val path = recorder.startRecording()
         if (path != null) {
             prefs.isCurrentlyRecording = true
@@ -270,10 +281,21 @@ class KeywordListenerService : Service(), RecognitionListener {
         } else {
             broadcastStatus("❌ Could not start recording", false)
         }
+
+        // Restart recognizer after a delay to let the audio session settle
+        handler.postDelayed({
+            if (prefs.isServiceRunning) {
+                initRecognizer()
+                startListening()
+            }
+        }, 1000)
     }
 
     private fun handleStop() {
-        // Stop only the recording — service stays alive and keeps listening
+        Log.d(TAG, "handleStop: Cycling recognizer to stop recorder")
+        isListeningActive = false
+        try { speechRecognizer.cancel() } catch (_: Exception) {}
+
         val savedPath = recorder.stopRecording()
         prefs.isCurrentlyRecording = false
         if (savedPath != null) {
@@ -285,7 +307,13 @@ class KeywordListenerService : Service(), RecognitionListener {
             broadcastStatus("❌ Failed to save recording", false)
             updateNotification("👂 Listening for triggers...")
         }
-        // No stopSelf() — service continues listening for the NEXT start word
+
+        handler.postDelayed({
+            if (prefs.isServiceRunning) {
+                initRecognizer()
+                startListening()
+            }
+        }, 500)
     }
 
     // ─── Notification ────────────────────────────────────────────────────────
