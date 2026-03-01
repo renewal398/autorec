@@ -39,8 +39,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="This app is created by Philus Roffa"
-    android:textSize="12sp"
-    android:textColor="#2600ff"
+    android:textSize="16sp"
+    android:textColor="#990c0c"
     android:gravity="center"
     android:layout_marginBottom="8dp"/>
 </LinearLayout>
