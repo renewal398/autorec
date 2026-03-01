@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Autorec</string>
+    <string name="tap_trigger_label">Tap Trigger</string>
+    <string name="tap_trigger_description">Allows triggering recordings by tapping the screen multiple times.</string>
 </resources>

@@ -1,18 +1,22 @@
 [
     {
-        "merged": "com.autorec.app-mergeDebugResources-3:/layout/item_recording.xml",
-        "source": "com.autorec.app-main-6:/layout/item_recording.xml"
+        "merged": "/home/jules/.gradle/daemon/8.8/com.autorec.app-mergeDebugResources-3:/layout/activity_recordings.xml",
+        "source": "/home/jules/.gradle/daemon/8.8/com.autorec.app-main-6:/layout/activity_recordings.xml"
     },
     {
-        "merged": "com.autorec.app-mergeDebugResources-3:/layout/activity_recordings.xml",
-        "source": "com.autorec.app-main-6:/layout/activity_recordings.xml"
+        "merged": "/home/jules/.gradle/daemon/8.8/com.autorec.app-mergeDebugResources-3:/layout/activity_main.xml",
+        "source": "/home/jules/.gradle/daemon/8.8/com.autorec.app-main-6:/layout/activity_main.xml"
     },
     {
         "merged": "com.autorec.app-mergeDebugResources-3:/layout/activity_main.xml",
         "source": "com.autorec.app-main-6:/layout/activity_main.xml"
     },
     {
-        "merged": "com.autorec.app-mergeDebugResources-3:/layout/activity_settings.xml",
-        "source": "com.autorec.app-main-6:/layout/activity_settings.xml"
+        "merged": "/home/jules/.gradle/daemon/8.8/com.autorec.app-mergeDebugResources-3:/layout/activity_settings.xml",
+        "source": "/home/jules/.gradle/daemon/8.8/com.autorec.app-main-6:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "/home/jules/.gradle/daemon/8.8/com.autorec.app-mergeDebugResources-3:/layout/item_recording.xml",
+        "source": "/home/jules/.gradle/daemon/8.8/com.autorec.app-main-6:/layout/item_recording.xml"
     }
 ]
