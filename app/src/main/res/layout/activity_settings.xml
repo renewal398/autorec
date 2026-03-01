@@ -30,4 +30,17 @@
     <Button android:id="@+id/btnSave" android:layout_width="match_parent" android:layout_height="54dp"
         android:text="Save Words" android:textSize="16sp" android:textStyle="bold"
         android:textColor="#FFFFFF" android:backgroundTint="#E94560"/>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"/>
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="This app is created by Philus Roffa"
+    android:textSize="12sp"
+    android:textColor="#2600ff"
+    android:gravity="center"
+    android:layout_marginBottom="8dp"/>
 </LinearLayout>
