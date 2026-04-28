@@ -28,4 +28,8 @@ class PreferencesManager(context: Context) {
     var isCurrentlyRecording: Boolean
         get() = prefs.getBoolean("currently_recording", false)
         set(value) = prefs.edit().putBoolean("currently_recording", value).apply()
+
+    var isVoiceTriggerEnabled: Boolean
+        get() = prefs.getBoolean("voice_trigger_enabled", true)
+        set(value) = prefs.edit().putBoolean("voice_trigger_enabled", value).apply()
 }

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.autorec.app.R;
@@ -29,12 +30,17 @@ public final class ActivitySettingsBinding implements ViewBinding {
   @NonNull
   public final EditText etStopWord;
 
+  @NonNull
+  public final SwitchCompat swVoiceTrigger;
+
   private ActivitySettingsBinding(@NonNull LinearLayout rootView, @NonNull Button btnSave,
-      @NonNull EditText etStartWord, @NonNull EditText etStopWord) {
+      @NonNull EditText etStartWord, @NonNull EditText etStopWord,
+      @NonNull SwitchCompat swVoiceTrigger) {
     this.rootView = rootView;
     this.btnSave = btnSave;
     this.etStartWord = etStartWord;
     this.etStopWord = etStopWord;
+    this.swVoiceTrigger = swVoiceTrigger;
   }
 
   @Override
@@ -82,7 +88,14 @@ public final class ActivitySettingsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivitySettingsBinding((LinearLayout) rootView, btnSave, etStartWord, etStopWord);
+      id = R.id.swVoiceTrigger;
+      SwitchCompat swVoiceTrigger = ViewBindings.findChildViewById(rootView, id);
+      if (swVoiceTrigger == null) {
+        break missingId;
+      }
+
+      return new ActivitySettingsBinding((LinearLayout) rootView, btnSave, etStartWord, etStopWord,
+          swVoiceTrigger);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

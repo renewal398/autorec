@@ -73,7 +73,8 @@ class MainActivity : AppCompatActivity() {
         prefs.isServiceRunning = true
         isServiceRunning = true
         updateServiceUI(running = true, recording = false)
-        updateStatusUI("👂 Listening for \"${prefs.startWord}\"...", false)
+        val msg = if (prefs.isVoiceTriggerEnabled) "👂 Listening for \"${prefs.startWord}\"..." else "Service running (Voice triggers disabled)"
+        updateStatusUI(msg, false)
     }
 
     private fun stopListenerService() {
@@ -163,8 +164,14 @@ class MainActivity : AppCompatActivity() {
         updateTriggerWordDisplay()
 
         when {
-            isRecording     -> updateStatusUI("🔴 Recording... say \"${prefs.stopWord}\" to stop", true)
-            isServiceRunning -> updateStatusUI("👂 Listening for \"${prefs.startWord}\"...", false)
+            isRecording     -> {
+                val msg = if (prefs.isVoiceTriggerEnabled) "🔴 Recording... say \"${prefs.stopWord}\" to stop" else "🔴 Recording..."
+                updateStatusUI(msg, true)
+            }
+            isServiceRunning -> {
+                val msg = if (prefs.isVoiceTriggerEnabled) "👂 Listening for \"${prefs.startWord}\"..." else "Service running (Voice triggers disabled)"
+                updateStatusUI(msg, false)
+            }
             else            -> updateStatusUI("Press ▶ Start to begin listening", false)
         }
     }

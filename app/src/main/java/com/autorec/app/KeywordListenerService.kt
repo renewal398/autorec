@@ -55,12 +55,15 @@ class KeywordListenerService : Service(), RecognitionListener {
         wakeLock.acquire()
 
         createNotificationChannel()
-        startForeground(NOTIF_ID, buildNotification("Listening for triggers..."))
+        val notifText = if (prefs.isVoiceTriggerEnabled) "Listening for triggers..." else "Service running (Voice triggers disabled)"
+        startForeground(NOTIF_ID, buildNotification(notifText))
         prefs.isServiceRunning = true
         prefs.isCurrentlyRecording = false   // always reset on clean start
 
-        initRecognizer()
-        startListening()
+        if (prefs.isVoiceTriggerEnabled) {
+            initRecognizer()
+            startListening()
+        }
         Log.d(TAG, "Service started")
     }
 
@@ -104,6 +107,7 @@ class KeywordListenerService : Service(), RecognitionListener {
     }
 
     private fun startListening() {
+        if (!prefs.isVoiceTriggerEnabled) return
         if (!SpeechRecognizer.isRecognitionAvailable(this)) {
             broadcastStatus("Speech recognition not available", recorder.isRecording); return
         }
@@ -300,7 +304,7 @@ class KeywordListenerService : Service(), RecognitionListener {
 
         // Restart recognizer after a delay to let the audio session settle
         handler.postDelayed({
-            if (prefs.isServiceRunning) {
+            if (prefs.isServiceRunning && prefs.isVoiceTriggerEnabled) {
                 initRecognizer()
                 startListening()
             }
@@ -316,16 +320,19 @@ class KeywordListenerService : Service(), RecognitionListener {
         prefs.isCurrentlyRecording = false
         if (savedPath != null) {
             val name = savedPath.substringAfterLast("/")
-            broadcastStatus("✅ Saved: $name  |  Listening...", false)
-            updateNotification("👂 Listening for triggers...")
+            val msg = if (prefs.isVoiceTriggerEnabled) "✅ Saved: $name  |  Listening..." else "✅ Saved: $name"
+            val notifText = if (prefs.isVoiceTriggerEnabled) "👂 Listening for triggers..." else "Service running (Voice triggers disabled)"
+            broadcastStatus(msg, false)
+            updateNotification(notifText)
             sendBroadcast(Intent(ACTION_RECORDING_DONE).putExtra(EXTRA_FILE_PATH, savedPath))
         } else {
+            val notifText = if (prefs.isVoiceTriggerEnabled) "👂 Listening for triggers..." else "Service running (Voice triggers disabled)"
             broadcastStatus("❌ Failed to save recording", false)
-            updateNotification("👂 Listening for triggers...")
+            updateNotification(notifText)
         }
 
         handler.postDelayed({
-            if (prefs.isServiceRunning) {
+            if (prefs.isServiceRunning && prefs.isVoiceTriggerEnabled) {
                 initRecognizer()
                 startListening()
             }
