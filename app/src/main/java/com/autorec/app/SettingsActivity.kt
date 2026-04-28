@@ -25,10 +25,12 @@ class SettingsActivity : AppCompatActivity() {
         // Load current values
         binding.etStartWord.setText(prefs.startWord)
         binding.etStopWord.setText(prefs.stopWord)
+        binding.swVoiceTrigger.isChecked = prefs.isVoiceTriggerEnabled
 
         binding.btnSave.setOnClickListener {
             val newStart = binding.etStartWord.text.toString().trim()
             val newStop = binding.etStopWord.text.toString().trim()
+            val isVoiceEnabled = binding.swVoiceTrigger.isChecked
 
             when {
                 newStart.isEmpty() -> {
@@ -43,7 +45,8 @@ class SettingsActivity : AppCompatActivity() {
                 else -> {
                     prefs.startWord = newStart
                     prefs.stopWord = newStop
-                    Toast.makeText(this, "✅ Words saved! Restart service to apply.", Toast.LENGTH_LONG).show()
+                    prefs.isVoiceTriggerEnabled = isVoiceEnabled
+                    Toast.makeText(this, "✅ Settings saved! Restart service to apply.", Toast.LENGTH_LONG).show()
                     finish()
                 }
             }

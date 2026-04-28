@@ -22,6 +22,7 @@ id recordingIndicator
 id rvRecordings
 id seekBar
 id serviceDot
+id swVoiceTrigger
 id tvCount
 id tvCurrentTime
 id tvEmpty

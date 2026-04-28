@@ -5,7 +5,18 @@
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="Set your trigger words (separated by commas)" android:textSize="14sp" android:textColor="#888888"
-        android:layout_marginBottom="28dp" android:layout_marginTop="12dp"/>
+        android:layout_marginBottom="16dp" android:layout_marginTop="12dp"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/swVoiceTrigger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Voice Triggers"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp"
+        android:thumbTint="#E94560"
+        android:trackTint="#888888"/>
 
     <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
         android:text="START RECORDING WORDS" android:textSize="10sp" android:textColor="#E94560"
